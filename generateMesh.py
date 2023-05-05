@@ -1,4 +1,4 @@
-import dnlv2, numpy, math
+import engine, numpy, math
 """
 1. use imported image to create verticies around corners, ignoring previously written corners
 2. use nearest neighbor algorithm to find 4 closest points
@@ -23,7 +23,7 @@ def generatemesh(mData, mTransform, sprg):
                 for i in lineList:
                         if ((vts[x]==i.point_a) and (vts[y]==i.point_b)) or ((vts[y]==i.point_a) and (vts[x]==i.point_b)): unq=0
                 if unq:
-                    lineList.append(dnlv2.line(vts[y],
+                    lineList.append(engine.line(vts[y],
                                                vts[x],
                                                math.dist(vts[y].origin, vts[x].origin),
                                                0.0,
@@ -36,19 +36,19 @@ def generatemesh(mData, mTransform, sprg):
     for y in range(mSize[1]+1):
         for x in range(mSize[0]+1):
             if mData[y][x]:
-                pointList.append(dnlv2.point([mTransform[0]+x*mTransform[2], mTransform[1]+y*mTransform[2]],[0, 0], [0, 0], [0, 0],0))
+                pointList.append(engine.point([mTransform[0]+x*mTransform[2], mTransform[1]+y*mTransform[2]],[0, 0], [0, 0], [0, 0],0))
                 l = [x==0 or (mData[y][x-1]==0),
                      y==0 or (mData[y-1][x]==0),
                      y==0 or x==mSize[0] or (mData[y-1][x+1]==0)]
                 h = [0, 0]
                 if (x==mSize[0] or not(mData[y][x+1])) and l[1] and l[2]:
-                    pointList.append(dnlv2.point([mTransform[0]+(x+1)*mTransform[2], mTransform[1]+y*mTransform[2]],[0, 0], [0, 0], [0, 0],0))
+                    pointList.append(engine.point([mTransform[0]+(x+1)*mTransform[2], mTransform[1]+y*mTransform[2]],[0, 0], [0, 0], [0, 0],0))
                     
                 if (y==mSize[1] or not(mData[y+1][x])) and l[0]:
-                    pointList.append(dnlv2.point([mTransform[0]+x*mTransform[2], mTransform[1]+(y+1)*mTransform[2]],[0, 0], [0, 0], [0, 0],0))
+                    pointList.append(engine.point([mTransform[0]+x*mTransform[2], mTransform[1]+(y+1)*mTransform[2]],[0, 0], [0, 0], [0, 0],0))
 
                 if (x==mSize[0] or y==mSize[1]) or not(mData[y+1][x+1]):
-                    pointList.append(dnlv2.point([mTransform[0]+(x+1)*mTransform[2], mTransform[1]+(y+1)*mTransform[2]],[0, 0], [0, 0], [0, 0],0))
+                    pointList.append(engine.point([mTransform[0]+(x+1)*mTransform[2], mTransform[1]+(y+1)*mTransform[2]],[0, 0], [0, 0], [0, 0],0))
 
 
     #create 4 corners using nearest neighbor algorithm, and send to makesqr
