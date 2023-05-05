@@ -1,4 +1,4 @@
-import pygame, numpy, dnlv2, math, generateMesh
+import pygame, numpy, engine, math, generateMesh
 size=[800, 600]
 scale=1.0
 scr = pygame.display.set_mode(size)
@@ -160,7 +160,7 @@ while playing:
     if update_sim and fps!=0:
         for i in range(iter_step):
             dt = speed/(fps*iter_step)
-            dnlv2.update(pointList, lineList, dt, 0.3, rigid_box, vertex_size)
+            engine.update(pointList, lineList, dt, 0.3, rigid_box, vertex_size)
     
     
     #decrease difference in camera and mesh position by factor of cam_speed and fps
